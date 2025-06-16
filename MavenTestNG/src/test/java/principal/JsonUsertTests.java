@@ -1,6 +1,7 @@
 package principal;
 
 import modelos.User;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import reader.JsonReader;
@@ -16,16 +17,16 @@ public class JsonUsertTests extends BaseTest {
 
     @Test
     public void primerTest() {
-        System.out.printf("El id es: %d%n", user.getId());
+        Assert.assertTrue(user.getId() > 0);
     }
 
     @Test
     public void segundoTest() {
-        System.out.printf("El address.geo.lng es: %.2f%n", user.getAddress().getGeo().getLng());
+        Assert.assertEquals(user.getAddress().getGeo().getLng(), 71.7478);
     }
 
     @Test
     public void tercerTest() {
-        System.out.printf("El company.bs es: %s%n", user.getCompany().getBs());
+        Assert.assertTrue(user.getCompany().getBs().length() > 10);
     }
 }

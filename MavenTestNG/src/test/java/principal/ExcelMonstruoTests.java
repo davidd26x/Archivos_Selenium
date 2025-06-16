@@ -1,6 +1,7 @@
 package principal;
 
 import modelos.Monstruo;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import reader.ExcelReader;
@@ -19,18 +20,32 @@ public class ExcelMonstruoTests extends BaseTest {
     @Test
     public void primerTest() {
         final var primerMonstruo = listaMonstruo.get(0);
-        System.out.printf("El nombre del 1er monstruo es: %s%n", primerMonstruo.getNombre());
+        Assert.assertEquals(primerMonstruo.getNombre(), "TOLOSA", "1er nombre no hace match");
     }
 
     @Test
     public void segundoTest() {
         final var n = listaMonstruo.size();
-        System.out.printf("El tamano de la lista de monstruos es: %s%n", n);
+        Assert.assertEquals(n, 14, "longitud incorrecta");
     }
 
     @Test
     public void tercerTest() {
-        final var nivelTercerMonstruo = listaMonstruo.get(2);
-        System.out.printf("El nivel del tercer monstruo es: %s%n", nivelTercerMonstruo.getNivel());
+        final var tercerMonstruo = listaMonstruo.get(2);
+        Assert.assertEquals(tercerMonstruo.getNivel(), 22, "3er nivel no hace match");
+    }
+
+    @Test
+    public void cuartoTest() {
+        final var ultimoMonstruo = listaMonstruo.get(listaMonstruo.size() - 1);
+
+        softAssert.assertEquals(ultimoMonstruo.getNombre(), "LUCENA");
+        softAssert.assertEquals(ultimoMonstruo.getEdad(), 3);
+        softAssert.assertEquals(ultimoMonstruo.getPeso(), 8.57);
+        softAssert.assertEquals(ultimoMonstruo.getGenero(), "MACHO");
+        softAssert.assertEquals(ultimoMonstruo.getNivel(), 36);
+
+        softAssert.assertAll();
+
     }
 }
