@@ -8,16 +8,18 @@ import org.testng.asserts.SoftAssert;
 public class BaseTest {
 
     protected Faker faker;
+    protected final String regression = "regression";
+    protected final String smoke = "smoke";
     protected SoftAssert softAssert;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void masterSetUp() {
         Logs.info("Setup del padre");
         faker = new Faker();
         softAssert = new SoftAssert();
     }
 
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     public void masterTearDown() {
         Logs.info("Teardown del padre");
     }

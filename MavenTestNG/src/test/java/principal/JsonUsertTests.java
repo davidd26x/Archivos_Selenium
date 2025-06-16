@@ -10,22 +10,22 @@ import utilities.BaseTest;
 public class JsonUsertTests extends BaseTest {
     private User user;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void setUp() {
         user = JsonReader.leerUsuarioJson();
     }
 
-    @Test
+    @Test(groups = {regression, smoke})
     public void primerTest() {
         Assert.assertTrue(user.getId() > 0);
     }
 
-    @Test
+    @Test(groups = {regression})
     public void segundoTest() {
         Assert.assertEquals(user.getAddress().getGeo().getLng(), 71.7478);
     }
 
-    @Test
+    @Test(groups = {regression})
     public void tercerTest() {
         Assert.assertTrue(user.getCompany().getBs().length() > 10);
     }
