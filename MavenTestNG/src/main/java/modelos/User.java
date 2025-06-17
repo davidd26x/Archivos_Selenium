@@ -31,6 +31,18 @@ public class User {
         return id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
     public Address getAddress() {
         return address;
     }
