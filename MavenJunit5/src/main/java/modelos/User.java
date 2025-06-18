@@ -38,4 +38,16 @@ public class User {
     public Company getCompany() {
         return company;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
 }
