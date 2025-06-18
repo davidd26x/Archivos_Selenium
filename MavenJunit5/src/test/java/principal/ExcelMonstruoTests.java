@@ -1,5 +1,7 @@
 package principal;
 
+import annotations.Regression;
+import annotations.Smoke;
 import modelos.Monstruo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,24 +20,30 @@ public class ExcelMonstruoTests extends BaseTest {
     }
 
     @Test
+    @Regression
+    @Smoke
     public void primerTest() {
         final var primerMonstruo = listaMonstruo.get(0);
         Assertions.assertEquals(primerMonstruo.getNombre(), "TOLOSA", "1er nombre no hace match");
     }
 
     @Test
+    @Regression
+    @Smoke
     public void segundoTest() {
         final var n = listaMonstruo.size();
         Assertions.assertEquals(n, 14, "longitud incorrecta");
     }
 
     @Test
+    @Regression
     public void tercerTest() {
         final var tercerMonstruo = listaMonstruo.get(2);
         Assertions.assertEquals(tercerMonstruo.getNivel(), 22, "3er nivel no hace match");
     }
 
     @Test
+    @Regression
     public void cuartoTest() {
         final var ultimoMonstruo = listaMonstruo.get(listaMonstruo.size() - 1);
 
