@@ -31,26 +31,25 @@ public class DataAleatoriaStepDefinition {
     @Then("Verifico que la suma sea positiva")
     public void verificarSumaPositiva() {
         Assertions.assertTrue(suma > 0);
-        
+
     }
 
     @When("Multiplico los valores")
     public void multiplicarValores() {
         producto = a * b;
-        
+
     }
 
     @Then("Verifico que el producto sea positivo")
     public void verificarProductoPositivo() {
         Assertions.assertTrue(producto > 0);
-        
+
     }
 
     @When("Calculo la raiz cuadrada de ambos")
     public void calcularRaizCuadrada() {
         raizCuadrada1 = Math.sqrt(a);
         raizCuadrada2 = Math.sqrt(b);
-        
     }
 
     @Then("Verifico que la raiz cuadrada de ambos sean positivos")
