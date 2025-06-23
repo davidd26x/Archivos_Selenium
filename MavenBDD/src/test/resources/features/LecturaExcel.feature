@@ -16,3 +16,14 @@ Feature: Lectura de Excel
   Scenario: Verificar la longitud de la lista
     When Obtengo la longitud de la lista
     Then Verifico que la longitud de la lista sea 14
+
+  Scenario Outline: Verificar 4 primeros elementos
+    When Obtengo el elemento con index <index>
+    Then Verifico que tenga el nombre <nombre>, edad <edad> y peso <peso>
+
+    Examples:
+      | index | nombre      | edad | peso |
+      | 0     | "TOLOSA"    | 5    | 1.97 |
+      | 1     | "COROMINAS" | 1    | 2.31 |
+      | 2     | "ARNATZ"    | 5    | 2.27 |
+      | 3     | "CABEZAS"   | 2    | 2.05 |

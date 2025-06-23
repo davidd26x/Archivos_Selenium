@@ -54,4 +54,18 @@ public class LecturaExcelStepDefinition {
     public void verificarLongitudLista(int tamEsperado) {
         Assertions.assertEquals(tamLista, tamEsperado);
     }
+
+    @When("Obtengo el elemento con index {int}")
+    public void obtenerElementoIndex(int index) {
+        monstruo = listaMonstruo.get(index);
+    }
+
+    @Then("Verifico que tenga el nombre {string}, edad {int} y peso {double}")
+    public void verificarDatosMonstruo(String nombre, int edad, double peso) {
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(monstruo.getNombre(), nombre),
+                () -> Assertions.assertEquals(monstruo.getEdad(), edad),
+                () -> Assertions.assertEquals(monstruo.getPeso(), peso)
+        );
+    }
 }
