@@ -9,6 +9,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.asserts.SoftAssert;
 
+import java.time.Duration;
+
 @Listeners({TestListeners.class, SuiteListeners.class})
 public class BaseTest {
     protected SoftAssert softAssert;
@@ -29,14 +31,25 @@ public class BaseTest {
         Logs.debug("Borrando cookies");
         driver.manage().deleteAllCookies();
 
+        Logs.debug("Seteando implicit wait de 5 segundos");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+
         Logs.debug("Asignando driver al webdriver provider");
         new WebdriverProvider().set(driver);
-        
+
     }
 
     @AfterMethod(alwaysRun = true)
     public void masterTearDown() {
         Logs.debug("Matando el driver");
         driver.quit();
+    }
+
+    protected void sleep(int timeMs) {
+        try {
+            Thread.sleep(timeMs);
+        } catch (InterruptedException interruptedException) {
+            Logs.error("InterruptedException: %s", interruptedException.getLocalizedMessage());
+        }
     }
 }
