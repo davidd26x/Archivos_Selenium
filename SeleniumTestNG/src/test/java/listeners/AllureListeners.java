@@ -4,15 +4,21 @@ import io.qameta.allure.listener.TestLifecycleListener;
 import io.qameta.allure.model.TestResult;
 import utilities.FileManager;
 import utilities.Logs;
+import utilities.WebdriverProvider;
 
 public class AllureListeners implements TestLifecycleListener {
     @Override
     public void beforeTestStop(TestResult result) {
         Logs.debug("Before test stop de allure");
-        final var resultType = result.getStatus();
+        final var status = result.getStatus();
 
-        switch (resultType) {
-            case BROKEN, FAILED -> FileManager.getScreenshot();
+        switch (status) {
+            case BROKEN, FAILED -> {
+                if (new WebdriverProvider().get() != null){
+                    FileManager.getScreenshot();
+                    FileManager.getPageSource();
+                }
+            }
         }
     }
 }

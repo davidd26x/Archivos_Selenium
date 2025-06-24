@@ -2,6 +2,7 @@ package utilities;
 
 import io.qameta.allure.Attachment;
 import org.apache.commons.io.FileUtils;
+import org.jsoup.Jsoup;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 
@@ -37,9 +38,12 @@ public class FileManager {
             Logs.debug("Creando los directorios padres si es que no existen");
             if (file.getParentFile().mkdirs()) {
                 final var fileWriter = new FileWriter(file);
+                final var pageSource = new WebdriverProvider().get().getPageSource();
+                fileWriter.write(Jsoup.parse(pageSource).toString());
+                fileWriter.close();
             }
         } catch (IOException ioException) {
-
+            Logs.error("Error tomar page source: %s", ioException.getLocalizedMessage());
         }
     }
 
@@ -47,6 +51,7 @@ public class FileManager {
         try {
             Logs.debug("Borrando la carpeta de evidencias");
             FileUtils.deleteDirectory(new File(screenshotPath));
+            FileUtils.deleteDirectory(new File(pageSourcePath));
         } catch (IOException ioException) {
             Logs.error("Error al borrar la evidencia anterior: %s", ioException.getLocalizedMessage());
         }
@@ -55,5 +60,10 @@ public class FileManager {
     @Attachment(value = "screenshot", type = "image/png")
     public static byte[] getScreenshot() {
         return ((TakesScreenshot) new WebdriverProvider().get()).getScreenshotAs(OutputType.BYTES);
+    }
+
+    @Attachment(value = "pageSource", type = "text/html", fileExtension = "txt")
+    public static String getPageSource(){
+        return Jsoup.parse(new WebdriverProvider().get().getPageSource()).toString();
     }
 }
