@@ -41,7 +41,70 @@ public class TutorialsPointTest extends BaseTest {
 
         Logs.info("Verificando que se regreso a la ventana original");
         Assert.assertTrue(
-                driver.findElement()
+                driver.findElement(By.xpath("/h1[text()='Browser Windows']"))
+                        .isDisplayed()
+        );
+    }
+
+    @Test
+    public void ventanaTest() {
+        Logs.info("Navegando a la página");
+        driver.get("https://www.tutorialspoint.com/selenium/practice/browser-windows.php");
+
+        Logs.debug("Obteniendo el id de la ventana actual para reconocerlo posteriormente");
+        final var windowId = driver.getWindowHandle();
+        Logs.debug("windowId: %s", windowId);
+
+        Logs.info("Haciendo click en el boton new window");
+        driver.findElement(By.xpath("//button[text()='New Window']")).click();
+
+        final var windowHandlesSet = driver.getWindowHandles();
+        Logs.debug("Window handles set: %s", windowHandlesSet);
+
+        Logs.debug("Nos posicionamos en la nueva ventana");
+        for (var windowHandle : windowHandlesSet) {
+            if (!windowHandle.equals(windowId)) {
+                driver.switchTo().window(windowHandle);
+            }
+        }
+        Logs.info("Verificando el texto");
+        Assert.assertTrue(
+                driver.findElement(By.xpath("//h1[text()='New Window']")).isDisplayed()
+        );
+        Logs.info("Cerrando la ventana actual");
+        driver.close();
+
+        Logs.debug("Regresando el focus a la ventana original");
+        driver.switchTo().window(windowId);
+
+        Logs.info("Verificando que se regreso a la ventana original");
+        Assert.assertTrue(
+                driver.findElement(By.xpath("//h1[text()='Browser Windows']"))
+                        .isDisplayed()
+        );
+
+    }
+
+    @Test
+    public void iframeTest() {
+        Logs.info("Navegando a la página principal");
+        driver.get("https://www.tutorialspoint.com/selenium/practice/nestedframes.php");
+
+        Logs.debug("Nos posicionamos en el iframe");
+        driver.switchTo().frame("frame1"); //id
+
+        Logs.info("Verificando el titulo del iframe");
+        Assert.assertTrue(
+                driver.findElement(By.xpath("//h1[text()='New Tab']"))
+                        .isDisplayed()
+        );
+
+        Logs.debug("Regresando a la página principal");
+        driver.switchTo().defaultContent();
+
+        Logs.debug("Verificando el titulo de la página");
+        Assert.assertTrue(
+                driver.findElement(By.xpath("//h1[text()='Nested Frames']"))
                         .isDisplayed()
         );
     }
