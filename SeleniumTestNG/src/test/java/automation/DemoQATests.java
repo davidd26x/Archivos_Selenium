@@ -20,11 +20,10 @@ public class DemoQATests extends BaseTest {
         Logs.debug("fullname: %s", fullName);
 
         final var usernameInput = driver.findElement(By.id("userName"));
-        Logs.info("Haciendo click para dar focus");
-        usernameInput.click();
 
-        Logs.info("Presionando SHIFT y escribiendo en mayúsculas");
+        Logs.info("Hago click para dar focus, presionando SHIFT y escribiendo en mayúsculas");
         new Actions(driver)
+                .click(usernameInput)
                 .keyDown(Keys.SHIFT)
                 .sendKeys(fullName)
                 .keyUp(Keys.SHIFT)
@@ -48,12 +47,10 @@ public class DemoQATests extends BaseTest {
 
         final var currentAddressInput = driver.findElement(By.id("currentAddress"));
 
-        Logs.info("Escribiendo la dirección y dando focus");
-        currentAddressInput.sendKeys(address);
-        currentAddressInput.click();
-
-        Logs.info("Seleccionando y copiando el contenido");
+        Logs.info("Doy focus, selecciono y copio el contenido");
         new Actions(driver)
+                .click(currentAddressInput)
+                .sendKeys(address)
                 .keyDown(Keys.CONTROL) //presionar Ctrl
                 .sendKeys("a") //ctrl + a selecciona contenido
                 .sendKeys("c") //ctrl + c copia contenido
@@ -61,11 +58,10 @@ public class DemoQATests extends BaseTest {
                 .perform(); //realiza acciones
 
         final var permanentAddressInput = driver.findElement(By.id("permanentAddress"));
-        Logs.info("Doy focus al click");
-        permanentAddressInput.click();
 
-        Logs.info("Pegando el contenido");
+        Logs.info("Dando focus y pegando el contenido");
         new Actions(driver)
+                .click(permanentAddressInput)
                 .keyDown(Keys.CONTROL) //presiona ctrl
                 .sendKeys("v") //ctrl + v pega el contenido
                 .keyUp(Keys.CONTROL) //suelta ctrl
@@ -75,6 +71,43 @@ public class DemoQATests extends BaseTest {
         Assert.assertEquals(
                 permanentAddressInput.getAttribute("value"),
                 currentAddressInput.getAttribute("value")
+        );
+    }
+
+    @Test
+    public void mouse1Test() {
+        Logs.info("Navegando a la página");
+        driver.get("https://demoqa.com/droppable");
+
+        final var figuraOrigen = driver.findElement(By.id("draggable"));
+        final var figuraDestino = driver.findElement(By.id("droppable"));
+
+        Logs.info("Arrastrando la figura origen a la de destino");
+        new Actions(driver)
+                .dragAndDrop(figuraOrigen, figuraDestino)
+                .perform();
+
+        Logs.info("Verificando que el label dropped sea visible");
+        Assert.assertTrue(driver.findElement(By.xpath("//p[text()='Dropped!']")).isDisplayed());
+    }
+
+    @Test
+    public void mouse2Test() {
+        Logs.info("Navegando a la página");
+        driver.get("https://demoqa.com/tool-tips");
+
+        final var botonVerde = driver.findElement(By.id("toolTipButton"));
+
+        Logs.info("Poniendo el puntero del mouse encima del boton verde");
+        new Actions(driver)
+                .moveToElement(botonVerde)
+                .pause(1500)
+                .perform();
+
+        Logs.info("Verificando el texto del hover");
+        Assert.assertEquals(
+          botonVerde.getAttribute("aria-describedby"),
+                "buttonToolTip"
         );
     }
 }
