@@ -4,6 +4,7 @@ import listeners.SuiteListeners;
 import listeners.TestListeners;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
@@ -15,6 +16,7 @@ import java.time.Duration;
 public class BaseTest {
     protected SoftAssert softAssert;
     protected WebDriver driver;
+    protected WebDriverWait wait;
     protected final String regression = "regression";
     protected final String smoke = "smoke";
 
@@ -31,8 +33,6 @@ public class BaseTest {
         Logs.debug("Borrando cookies");
         driver.manage().deleteAllCookies();
 
-        Logs.debug("Seteando implicit wait de 5 segundos");
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
 
         Logs.debug("Asignando driver al webdriver provider");
         new WebdriverProvider().set(driver);
