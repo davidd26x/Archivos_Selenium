@@ -11,13 +11,10 @@ public class LoginTests extends BaseTest {
 
     @BeforeMethod(alwaysRun = true)
     public void setUp() {
-        Logs.info("Navegando a la url");
-        driver.get("https://www.saucedemo.com");
-
-        loginPage.waitPageToLoad();
+        commonFlows.goToLoginPage();
     }
 
-    @Test
+    @Test(groups = {regression})
     public void usuarioInvalidoTest() {
         loginPage.fillLogin("locked_out_user", "secret_sauce");
         loginPage.verifyErrorMessage(
@@ -25,7 +22,7 @@ public class LoginTests extends BaseTest {
         );
     }
 
-    @Test
+    @Test(groups = {regression, smoke})
     public void verifyLoginPage() {
         loginPage.verifyPage();
     }

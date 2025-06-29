@@ -11,32 +11,21 @@ import utilities.Logs;
 
 public class BurgerMenuTests extends BaseTest {
     private final LoginPage loginPage = new LoginPage();
-    private final ShoppingPage shoppingPage = new ShoppingPage();
-    private final TopBar topBar = new TopBar();
     private final MenuBurger menuBurger = new MenuBurger();
 
     @BeforeMethod(alwaysRun = true)
     public void setUp() {
-        Logs.info("Navegando a la url");
-        driver.get("https://www.saucedemo.com");
-
-        loginPage.waitPageToLoad();
-
-        loginPage.fillLogin("standard_user", "secret_sauce");
-        shoppingPage.waitPageToLoad();
-        
-        topBar.openMenuBurger();
-        menuBurger.waitPageToLoad();
+        commonFlows.openBurgerMenu();
     }
 
-    @Test
+    @Test(groups = {regression, smoke})
     public void logoutTest() {
         menuBurger.clickLogout();
         loginPage.waitPageToLoad();
         loginPage.verifyPage();
     }
 
-    @Test
+    @Test(groups = {regression})
     public void aboutLinkTest() {
         menuBurger.verifyAboutLink("https://saucelabs.com");
     }
