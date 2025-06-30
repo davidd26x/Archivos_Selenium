@@ -1,5 +1,7 @@
 package automation;
 
+import data.CustomDataProviders;
+import data.DataGiver;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.LoginPage;
@@ -14,12 +16,14 @@ public class LoginTests extends BaseTest {
         commonFlows.goToLoginPage();
     }
 
-    @Test(groups = {regression})
-    public void usuarioInvalidoTest() {
-        loginPage.fillLogin("locked_out_user", "secret_sauce");
-        loginPage.verifyErrorMessage(
-                "Epic sadface: Sorry, this user has been locked out."
-        );
+    @Test(
+            groups = {regression},
+            dataProviderClass = CustomDataProviders.class,
+            dataProvider = CustomDataProviders.DP_CREDENTIALS
+    )
+    public void credentialsTest(String username, String password, String message){
+        loginPage.fillLogin(username, password);
+        loginPage.verifyErrorMessage(message);
     }
 
     @Test(groups = {regression, smoke})

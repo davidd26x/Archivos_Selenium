@@ -1,5 +1,6 @@
 package automation;
 
+import data.ExcelReader;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.LoginPage;
@@ -18,5 +19,11 @@ public class ShoppingTests extends BaseTest {
     @Test(groups = {regression, smoke})
     public void verifyPageTest() {
         shoppingPage.verifyPage();
+    }
+
+    @Test(groups = {regression})
+    public void productListPriceTest() {
+        final var listaItems = ExcelReader.leerListaProductoExcel();
+        shoppingPage.verifyProductsPrice(listaItems);
     }
 }

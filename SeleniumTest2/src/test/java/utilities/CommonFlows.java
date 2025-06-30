@@ -1,5 +1,6 @@
 package utilities;
 
+import data.DataGiver;
 import org.openqa.selenium.WebDriver;
 import pages.*;
 
@@ -18,7 +19,10 @@ public class CommonFlows {
     public void goToShoppingPage(){
         goToLoginPage();
 
-        new LoginPage().fillLogin("standard_user", "secret_sauce");
+        final var credencialesValidas = DataGiver.getValidCredentials();
+        new LoginPage().fillLogin(
+                credencialesValidas.getUsername(),
+                credencialesValidas.getPassword());
         new ShoppingPage().waitPageToLoad();
     }
 
@@ -35,5 +39,17 @@ public class CommonFlows {
 
         new ShoppingPage().goToItemDetail(itemName);
         new ItemDetailsPage().waitPageToLoad();
+    }
+
+    public void goToYourCartPage(){
+        goToShoppingPage();
+        new TopBar().clickShoppingCart();
+        new YourCartPage().waitPageToLoad();
+    }
+
+    public void goToYourInformationPage(){
+        goToYourCartPage();
+        new YourCartPage().clickCheckout();
+        new YourInformationPage().waitPageToLoad();
     }
 }
