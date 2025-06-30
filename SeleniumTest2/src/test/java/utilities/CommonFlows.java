@@ -1,6 +1,7 @@
 package utilities;
 
 import data.DataGiver;
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import pages.ItemDetailsPage;
 import pages.LoginPage;
@@ -15,6 +16,15 @@ public class CommonFlows {
         return new WebdriverProvider().get();
     }
 
+    private void assignLoginCookie() {
+        Logs.debug("Asignando la cookie de login");
+        getDriver().get("https://www.saucedemo.com/404");
+        final var credencialesValidas = DataGiver.getValidCredentials();
+        final var loginCookie =
+                new Cookie("session-username", credencialesValidas.getUsername());
+        getDriver().manage().addCookie(loginCookie);
+    }
+
     public void goToLoginPage() {
         Logs.info("Navegando a la url");
         getDriver().get("https://www.saucedemo.com");
@@ -23,12 +33,9 @@ public class CommonFlows {
     }
 
     public void goToShoppingPage() {
-        goToLoginPage();
+        assignLoginCookie();
+        getDriver().get("https://www.saucedemo.com/inventory.html");
 
-        final var credencialesValidas = DataGiver.getValidCredentials();
-        new LoginPage().fillLogin(
-                credencialesValidas.getUsername(),
-                credencialesValidas.getPassword());
         new ShoppingPage().waitPageToLoad();
     }
 
