@@ -3,10 +3,7 @@ package automation;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.Footer;
-import pages.LoginPage;
-import pages.ShoppingPage;
 import utilities.BaseTest;
-import utilities.Logs;
 
 public class FooterTests extends BaseTest {
     private final Footer footer = new Footer();

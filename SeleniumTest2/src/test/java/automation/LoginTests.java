@@ -1,12 +1,10 @@
 package automation;
 
 import data.CustomDataProviders;
-import data.DataGiver;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.LoginPage;
 import utilities.BaseTest;
-import utilities.Logs;
 
 public class LoginTests extends BaseTest {
     private final LoginPage loginPage = new LoginPage();
@@ -21,7 +19,7 @@ public class LoginTests extends BaseTest {
             dataProviderClass = CustomDataProviders.class,
             dataProvider = CustomDataProviders.DP_CREDENTIALS
     )
-    public void credentialsTest(String username, String password, String message){
+    public void credentialsTest(String username, String password, String message) {
         loginPage.fillLogin(username, password);
         loginPage.verifyErrorMessage(message);
     }

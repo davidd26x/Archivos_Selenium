@@ -4,10 +4,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.LoginPage;
 import pages.MenuBurger;
-import pages.ShoppingPage;
-import pages.TopBar;
 import utilities.BaseTest;
-import utilities.Logs;
 
 public class BurgerMenuTests extends BaseTest {
     private final LoginPage loginPage = new LoginPage();

@@ -3,10 +3,8 @@ package automation;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.ItemDetailsPage;
-import pages.LoginPage;
 import pages.ShoppingPage;
 import utilities.BaseTest;
-import utilities.Logs;
 
 public class ItemDetailTests extends BaseTest {
     private final ShoppingPage shoppingPage = new ShoppingPage();
